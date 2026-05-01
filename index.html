@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priyanshi Singhi — Cybersecurity & Forensics | Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#09111f;
+  --navy2:#0e1829;
+  --navy3:#131f33;
+  --accent:#00e5c3;
+  --accent2:#7b61ff;
+  --gold:#f0a500;
+  --text:#e4e9f2;
+  --muted:#7a8799;
+  --border:rgba(255,255,255,0.07);
+  --card:rgba(255,255,255,0.03);
+  --fh:'Syne',sans-serif;
+  --fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5%;background:rgba(9,17,31,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--fh);font-weight:800;font-size:1.25rem;color:var(--accent);text-decoration:none;letter-spacing:-0.02em}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:400;letter-spacing:0.03em;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.btn-nav{background:var(--accent);color:var(--navy);padding:.55rem 1.2rem;border-radius:7px;font-family:var(--fh);font-weight:700;font-size:0.8rem;text-decoration:none;transition:all .2s;white-space:nowrap}
+.btn-nav:hover{background:#00c9ab;transform:translateY(-1px)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:8rem 5% 4rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;opacity:.025;background-image:linear-gradient(rgba(0,229,195,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,195,.6) 1px,transparent 1px);background-size:55px 55px}
+.hero-orb{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,195,.06) 0%,transparent 65%);top:-150px;right:-200px;pointer-events:none}
+.hero-orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(123,97,255,.05) 0%,transparent 65%);bottom:-100px;left:-100px;pointer-events:none}
+.hero-content{position:relative;max-width:820px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,195,.07);border:1px solid rgba(0,229,195,.18);color:var(--accent);font-size:.78rem;padding:5px 14px;border-radius:100px;margin-bottom:1.6rem;letter-spacing:.08em;font-weight:500}
+.hero-tag::before{content:'';display:block;width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
+h1{font-family:var(--fh);font-size:clamp(3rem,7.5vw,5.8rem);font-weight:800;line-height:1.03;letter-spacing:-.03em;color:#fff;margin-bottom:.9rem}
+h1 span{color:var(--accent)}
+.hero-role{font-size:1rem;color:var(--accent2);font-weight:500;margin-bottom:1rem;letter-spacing:.04em}
+.hero-sub{font-size:1.1rem;color:var(--muted);max-width:540px;margin-bottom:2.5rem;font-weight:300;line-height:1.85}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.btn-primary{background:var(--accent);color:var(--navy);padding:.85rem 2rem;border-radius:8px;font-family:var(--fh);font-weight:700;font-size:.9rem;text-decoration:none;transition:all .2s;border:none;cursor:pointer;display:inline-block}
+.btn-primary:hover{background:#00c9ab;transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--text);padding:.85rem 2rem;border-radius:8px;font-family:var(--fh);font-weight:600;font-size:.9rem;text-decoration:none;transition:all .2s;border:1px solid var(--border);display:inline-block}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:3rem;padding-top:2rem;border-top:1px solid var(--border);flex-wrap:wrap}
+.stat-num{font-family:var(--fh);font-size:2.2rem;font-weight:800;color:#fff;line-height:1}
+.stat-num span{color:var(--accent)}
+.stat-label{font-size:.75rem;color:var(--muted);letter-spacing:.05em;margin-top:4px;text-transform:uppercase}
+
+/* SECTIONS */
+section{padding:6rem 5%}
+.sl{font-size:.72rem;letter-spacing:.15em;color:var(--accent);font-weight:600;text-transform:uppercase;margin-bottom:.5rem}
+h2{font-family:var(--fh);font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;color:#fff;line-height:1.08;margin-bottom:.8rem}
+h2 span{color:var(--accent)}
+.sec-sub{color:var(--muted);max-width:500px;font-size:1rem;margin-bottom:3rem;font-weight:300}
+
+/* ABOUT */
+#about{background:var(--navy2)}
+.about-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:start}
+.about-text p{color:var(--muted);margin-bottom:1rem;font-size:.97rem;font-weight:300}
+.about-text p strong{color:var(--text);font-weight:500}
+.cgpa-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0;font-size:.88rem;color:var(--gold);font-weight:500}
+.about-cards{display:flex;flex-direction:column;gap:.8rem}
+.info-card{display:flex;align-items:center;gap:1rem;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:.95rem 1.1rem;transition:border-color .2s}
+.info-card:hover{border-color:rgba(0,229,195,.2)}
+.ic-icon{width:36px;height:36px;border-radius:8px;background:rgba(0,229,195,.09);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ic-label{font-size:.7rem;color:var(--muted);margin-bottom:2px;letter-spacing:.03em}
+.ic-val{font-size:.88rem;color:var(--text);font-weight:500}
+.about-btns{display:flex;gap:.8rem;margin-top:1.5rem;flex-wrap:wrap}
+
+/* EXPERIENCE */
+#experience{background:var(--navy)}
+.exp-list{display:flex;flex-direction:column;gap:1.2rem}
+.exp-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.4rem 1.6rem;transition:all .25s;position:relative;overflow:hidden}
+.exp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .3s}
+.exp-card:hover{border-color:rgba(0,229,195,.2);transform:translateX(4px)}
+.exp-card:hover::before{transform:scaleY(1)}
+.exp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem}
+.exp-role{font-family:var(--fh);font-size:1rem;font-weight:700;color:#fff}
+.exp-dur{font-size:.78rem;color:var(--accent);background:rgba(0,229,195,.08);border:1px solid rgba(0,229,195,.15);padding:3px 10px;border-radius:100px;white-space:nowrap}
+.exp-company{font-size:.88rem;color:var(--muted);margin-bottom:.7rem}
+.exp-pts{display:flex;flex-direction:column;gap:.35rem}
+.exp-pt{font-size:.88rem;color:var(--muted);padding-left:1.1rem;position:relative;font-weight:300}
+.exp-pt::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.75rem;top:3px}
+.exp-stack{display:flex;flex-wrap:wrap;gap:5px;margin-top:.8rem}
+
+/* SKILLS */
+#skills{background:var(--navy2)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem}
+.sk-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.4rem;transition:all .25s}
+.sk-card:hover{border-color:rgba(0,229,195,.25);transform:translateY(-4px)}
+.sk-cat{font-size:.7rem;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:.6rem}
+.sk-card h3{font-family:var(--fh);font-size:1rem;font-weight:700;color:#fff;margin-bottom:.9rem}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:.76rem;padding:4px 9px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted)}
+.tag.hi{background:rgba(0,229,195,.07);border-color:rgba(0,229,195,.18);color:var(--accent)}
+.tag.hi2{background:rgba(123,97,255,.07);border-color:rgba(123,97,255,.18);color:#a08bff}
+
+/* PROJECTS */
+#projects{background:var(--navy)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.3rem}
+.proj-card{background:var(--navy3);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden}
+.proj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.proj-card:hover::after{transform:scaleX(1)}
+.proj-card:hover{border-color:rgba(0,229,195,.18);transform:translateY(-4px)}
+.pbadge{display:inline-flex;font-size:.68rem;padding:3px 10px;border-radius:100px;margin-bottom:.9rem;font-weight:600;letter-spacing:.04em}
+.b-sec{background:rgba(0,229,195,.08);color:var(--accent)}
+.b-web{background:rgba(123,97,255,.08);color:#a08bff}
+.b-ai{background:rgba(240,165,0,.07);color:var(--gold)}
+.b-gui{background:rgba(255,100,100,.07);color:#ff8080}
+.proj-title{font-family:var(--fh);font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.25}
+.proj-date{font-size:.73rem;color:var(--muted);margin-bottom:.7rem}
+.proj-desc{font-size:.86rem;color:var(--muted);margin-bottom:1.1rem;line-height:1.65;font-weight:300}
+.proj-pts{display:flex;flex-direction:column;gap:.3rem;margin-bottom:1.1rem}
+.proj-pt{font-size:.82rem;color:var(--muted);padding-left:1rem;position:relative;font-weight:300}
+.proj-pt::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.7rem;top:2px}
+.proj-links{display:flex;gap:.7rem;flex-wrap:wrap}
+.proj-link{font-size:.78rem;color:var(--accent);text-decoration:none;border:1px solid rgba(0,229,195,.18);padding:4px 11px;border-radius:6px;transition:background .2s}
+.proj-link:hover{background:rgba(0,229,195,.08)}
+
+/* ACCOMPLISHMENTS */
+#accomplishments{background:var(--navy2)}
+.acc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+.acc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.3rem;display:flex;gap:.9rem;align-items:flex-start;transition:all .2s}
+.acc-card:hover{border-color:rgba(0,229,195,.2)}
+.acc-icon{width:38px;height:38px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px}
+.acc-icon.teal{background:rgba(0,229,195,.1)}
+.acc-icon.purple{background:rgba(123,97,255,.1)}
+.acc-icon.gold{background:rgba(240,165,0,.08)}
+.acc-title{font-size:.88rem;font-weight:500;color:#fff;margin-bottom:3px}
+.acc-sub{font-size:.76rem;color:var(--muted)}
+
+/* ARTICLES */
+#articles{background:var(--navy)}
+.art-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.3rem}
+.art-card{background:var(--navy3);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .25s}
+.art-card:hover{border-color:rgba(0,229,195,.22);transform:translateY(-3px)}
+.art-kw{font-size:.7rem;color:var(--accent);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.5rem}
+.art-title{font-family:var(--fh);font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:.7rem}
+.art-exc{font-size:.85rem;color:var(--muted);margin-bottom:1.1rem;line-height:1.65;font-weight:300}
+.art-read{font-size:.8rem;color:var(--accent);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:gap .2s}
+.art-read:hover{gap:9px}
+
+/* CONTACT */
+#contact{background:var(--navy2)}
+.contact-wrap{max-width:680px;margin:0 auto;text-align:center}
+.contact-wrap p{color:var(--muted);margin-bottom:2.5rem;font-size:1rem;font-weight:300}
+.contact-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem;margin-bottom:2.5rem}
+.clink{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.85rem 1.4rem;text-decoration:none;color:var(--text);font-size:.87rem;font-weight:500;transition:all .2s}
+.clink:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid var(--border);text-align:center;padding:2rem 5%;font-size:.8rem;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:rgba(0,229,195,.25);border-radius:3px}
+
+@media(max-width:768px){
+  .about-wrap{grid-template-columns:1fr;gap:2.5rem}
+  .hero-stats{gap:1.5rem}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">PS.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#accomplishments">Achievements</a></li>
+    <li><a href="#articles">Articles</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:singhipriyanshi2004@gmail.com" class="btn-nav">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open to Internships &amp; Opportunities</div>
+    <h1>Priyanshi<br><span>Singhi</span></h1>
+    <div class="hero-role">B.Tech CSE (Cyber Security &amp; Forensics) · UPES, Dehradun · CGPA 9.12/10</div>
+    <p class="hero-sub">
+      Building <strong style="color:#fff;font-weight:500;">secure, full-stack web applications</strong> with a security-first mindset.
+      From MERN stack to adversarial AI threat detection — I build things that work and protect.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View My Projects</a>
+      <a href="#contact" class="btn-outline">Let's Connect</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">9.12<span>/10</span></div>
+        <div class="stat-label">CGPA</div>
+      </div>
+      <div>
+        <div class="stat-num">6<span>+</span></div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">3<span></span></div>
+        <div class="stat-label">Internships</div>
+      </div>
+      <div>
+        <div class="stat-num">2<span></span></div>
+        <div class="stat-label">Research Papers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-text">
+      <div class="sl">About Me</div>
+      <h2>Security-minded<br><span>full-stack developer</span></h2>
+      <p>I'm a <strong>Cyber Security and Forensics</strong> undergraduate at UPES, Dehradun with strong foundations in vulnerability assessment, secure web application development, and Python-based security tools.</p>
+      <p>I'm experienced in building and testing <strong>MERN stack applications</strong> and implementing solutions to improve system security and reliability — bridging the gap between functional development and real-world threat awareness.</p>
+      <p>From detecting PII leaks with regex automation to building adversarial prompt-injection defenses for LLM systems, I take a hands-on approach to solving complex security and development challenges.</p>
+      <div class="cgpa-badge">🏆 Academic Excellence — CGPA: 9.12 / 10</div>
+      <div class="about-btns">
+        <a href="#projects" class="btn-primary" style="font-size:.85rem;padding:.75rem 1.5rem;">See My Work</a>
+        <a href="mailto:singhipriyanshi2004@gmail.com" class="btn-outline" style="font-size:.85rem;padding:.75rem 1.5rem;">Email Me</a>
+      </div>
+    </div>
+    <div class="about-cards">
+      <div class="info-card">
+        <div class="ic-icon">🎓</div>
+        <div>
+          <div class="ic-label">Degree</div>
+          <div class="ic-val">B.Tech CSE — Cyber Security &amp; Forensics</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🏫</div>
+        <div>
+          <div class="ic-label">University</div>
+          <div class="ic-val">UPES, Dehradun (Jul 2023 – Present)</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">📍</div>
+        <div>
+          <div class="ic-label">Location</div>
+          <div class="ic-val">Dehradun, Uttarakhand, India</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">📞</div>
+        <div>
+          <div class="ic-label">Phone</div>
+          <div class="ic-val">+91 6376092237</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">✉️</div>
+        <div>
+          <div class="ic-label">Email</div>
+          <div class="ic-val">singhipriyanshi2004@gmail.com</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🗣️</div>
+        <div>
+          <div class="ic-label">Languages</div>
+          <div class="ic-val">English, Hindi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sl">Work Experience</div>
+  <h2>Internships &amp; <span>Training</span></h2>
+  <p class="sec-sub">Real-world experience across full-stack development, MERN stack, and social impact work.</p>
+  <div class="exp-list">
+
+    <div class="exp-card">
+      <div class="exp-top">
+        <div class="exp-role">Full Stack Intern</div>
+        <div class="exp-dur">Aug 2025 – Dec 2025 · 17 Weeks</div>
+      </div>
+      <div class="exp-company">Virtuon</div>
+      <div class="exp-pts">
+        <div class="exp-pt">Developed full-stack web applications using React, Node.js, Express.js, and MongoDB.</div>
+        <div class="exp-pt">Integrated REST APIs and built reusable front-end components for production-grade systems.</div>
+      </div>
+      <div class="exp-stack">
+        <span class="tag hi">React</span>
+        <span class="tag hi">Node.js</span>
+        <span class="tag hi">Express.js</span>
+        <span class="tag hi">MongoDB</span>
+        <span class="tag">REST APIs</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-top">
+        <div class="exp-role">MERN Stack Trainee</div>
+        <div class="exp-dur">Jun 2025 – Jul 2025 · 8 Weeks</div>
+      </div>
+      <div class="exp-company">Inventco Software Pvt. Ltd., Jaipur</div>
+      <div class="exp-pts">
+        <div class="exp-pt">Trained in MERN stack fundamentals through hands-on project development.</div>
+        <div class="exp-pt">Built responsive prototype web applications with backend connectivity.</div>
+      </div>
+      <div class="exp-stack">
+        <span class="tag hi">MERN Stack</span>
+        <span class="tag">Responsive Design</span>
+        <span class="tag">Backend Integration</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-top">
+        <div class="exp-role">Social Internship</div>
+        <div class="exp-dur">Jun 2024 – Jul 2024 · 8 Weeks</div>
+      </div>
+      <div class="exp-company">Naya Sawera NGO, Jaipur</div>
+      <div class="exp-pts">
+        <div class="exp-pt">Participated in social outreach campaigns and community initiatives.</div>
+        <div class="exp-pt">Assisted in team coordination and field documentation.</div>
+      </div>
+      <div class="exp-stack">
+        <span class="tag">Community Outreach</span>
+        <span class="tag">Team Coordination</span>
+        <span class="tag">Documentation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sl">Technical Skills</div>
+  <h2>Skills &amp; <span>Technologies</span></h2>
+  <p class="sec-sub">A comprehensive skill set spanning security tools, modern web technologies, and multiple programming languages.</p>
+  <div class="skills-grid">
+    <div class="sk-card">
+      <div class="sk-cat">Languages</div>
+      <h3>Programming</h3>
+      <div class="tags">
+        <span class="tag hi">Python</span>
+        <span class="tag hi">JavaScript</span>
+        <span class="tag">C</span>
+        <span class="tag">Java</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <div class="sk-cat">Frontend</div>
+      <h3>Web Development</h3>
+      <div class="tags">
+        <span class="tag hi">React.js</span>
+        <span class="tag hi">HTML5</span>
+        <span class="tag hi">CSS3</span>
+        <span class="tag hi">Tailwind CSS</span>
+        <span class="tag">Responsive Design</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <div class="sk-cat">Backend</div>
+      <h3>Server &amp; APIs</h3>
+      <div class="tags">
+        <span class="tag hi">Node.js</span>
+        <span class="tag hi">Express.js</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">MySQL</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <div class="sk-cat">Cybersecurity</div>
+      <h3>Security Tools</h3>
+      <div class="tags">
+        <span class="tag hi">Wireshark</span>
+        <span class="tag hi">Burp Suite</span>
+        <span class="tag hi">OWASP ZAP</span>
+        <span class="tag">Nmap</span>
+        <span class="tag">OpenVAS</span>
+        <span class="tag hi2">Kali Linux</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <div class="sk-cat">Operating Systems</div>
+      <h3>Platforms</h3>
+      <div class="tags">
+        <span class="tag hi">Linux</span>
+        <span class="tag hi2">Kali Linux</span>
+        <span class="tag">Windows</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <div class="sk-cat">Soft Skills</div>
+      <h3>Professional</h3>
+      <div class="tags">
+        <span class="tag hi">Leadership</span>
+        <span class="tag">Team Collaboration</span>
+        <span class="tag">Communication</span>
+        <span class="tag">Adaptability</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sl">What I've Built</div>
+  <h2>Featured <span>Projects</span></h2>
+  <p class="sec-sub">Security-conscious, full-stack projects built from coursework, internships, and independent research.</p>
+  <div class="proj-grid">
+
+   <div class="proj-card">
+  <div class="pbadge b-sec">AI Security · Research</div>
+  <div class="proj-title">VMI — Visual Memory Injection Attacks in Multi-Turn Vision-Language Models</div>
+  <div class="proj-date">Nov 2025 – Feb 2026 · Co-authored with Aadit Gulati · SSCSDF 2025</div>
+  <div class="proj-pts">
+    <div class="proj-pt">Implemented a PGD-based adversarial attack on CLIP ViT-L/14 that applies imperceptible pixel perturbations (≤ 8/255) to shift image embeddings toward an attacker-chosen semantic target — achieving 80% success rate and a mean cosine shift of 0.31 across 20 test images.</div>
+    <div class="proj-pt">Evaluated four detection strategies — Feature Squeezing, Embedding Anomaly Detection, Nearest Neighbour Analysis, and Conversation Drift Detection — and identified why embedding-space detectors fundamentally fail: PGD deliberately steers adversarial embeddings into the benign distribution, making them invisible to anomaly-based methods.</div>
+    <div class="proj-pt">Introduced Conversation Drift Detection, a novel behavior-level defense that monitors semantic trajectory across conversation turns using SentenceTransformer — achieving AUC 1.000 and 100% classification accuracy on the test set.</div>
+    <div class="proj-pt">Feature Squeezing achieved AUC 0.925 as the strongest image-level detector; together the two defenses form a recommended two-layer post-hoc monitoring strategy requiring zero model retraining.</div>
+  </div>
+  <div class="tags" style="margin-bottom:1rem">
+    <span class="tag hi">Python</span>
+    <span class="tag hi">CLIP ViT-L/14</span>
+    <span class="tag hi">PGD Attack</span>
+    <span class="tag hi2">AI Security</span>
+    <span class="tag">SentenceTransformer</span>
+    <span class="tag">Isolation Forest</span>
+    <span class="tag">Adversarial ML</span>
+    <span class="tag">Google Colab T4</span>
+  </div>
+  <div class="proj-links">
+    <a href="https://github.com/priyanshisinghi" class="proj-link" target="_blank">⬡ GitHub</a>
+  </div>
+</div>
+
+    <div class="proj-card">
+  <div class="pbadge b-ai">Security Engineering · Minor Project</div>
+  <div class="proj-title">CORTEX — Context-Aware Authentication Threat Intelligence System</div>
+  <div class="proj-date">Jan 2026 – Apr 2026 · Team of 4 · Guided by Dr. Bhavana Kaushik</div>
+  <div class="proj-pts">
+    <div class="proj-pt">Built a 13-module authentication analysis pipeline in Flask that evaluates every login attempt through velocity detection, impossible travel checking, device fingerprinting, threat intelligence feed cross-referencing, and behavioral baseline comparison.</div>
+    <div class="proj-pt">Designed a contextual risk scoring engine (LOW / MEDIUM / HIGH) with risk memory escalation — prior HIGH-risk history amplifies future scores — and a risk decay mechanism that gradually reduces scores for sustained clean behavior.</div>
+    <div class="proj-pt">Implemented an explainability module that generates human-readable justifications for every flagged login, making the system fully auditable for Security Operations Centre use.</div>
+    <div class="proj-pt">Built a React-based security monitoring dashboard with real-time alert views, threat logs, enforcement history, and user activity overview.</div>
+  </div>
+  <div class="tags" style="margin-bottom:1rem">
+    <span class="tag hi">Python</span>
+    <span class="tag hi">Flask</span>
+    <span class="tag hi">React.js</span>
+    <span class="tag hi">SQLite</span>
+    <span class="tag hi2">Threat Intelligence</span>
+    <span class="tag">Rule Engine</span>
+    <span class="tag">Risk Scoring</span>
+    <span class="tag">Explainability</span>
+    <span class="tag">Impossible Travel Detection</span>
+  </div>
+  <div class="proj-links">
+    <a href="https://github.com/priyanshisinghi" class="proj-link" target="_blank">⬡ GitHub</a>
+  </div>
+</div>
+
+    <div class="proj-card">
+      <div class="pbadge b-ai">AI Security</div>
+      <div class="proj-title">Adversarial Prompt-Injection Detection for LLM Applications</div>
+      <div class="proj-date">Nov 2025 – Dec 2025</div>
+      <div class="proj-pts">
+        <div class="proj-pt">Designed a security layer to detect and block malicious prompt-injection attacks in LLM-based applications.</div>
+        <div class="proj-pt">Implemented validation checks for both input prompts and generated responses to ensure safe outputs.</div>
+        <div class="proj-pt">Built a monitoring dashboard to trigger real-time alerts for suspicious activity.</div>
+      </div>
+      <div class="tags" style="margin-bottom:1rem">
+        <span class="tag hi">Python</span>
+        <span class="tag hi">Node.js</span>
+        <span class="tag hi">React.js</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag hi2">AI Security</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/priyanshisinghi" class="proj-link" target="_blank">⬡ GitHub</a>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="pbadge b-sec">Cybersecurity</div>
+      <div class="proj-title">Python-Based Sensitive Data (PII) Detection Tool</div>
+      <div class="proj-date">Jan 2025 – Feb 2025</div>
+      <div class="proj-pts">
+        <div class="proj-pt">Detects Aadhaar, PAN, emails, phone numbers, and card details using regex-based classification.</div>
+        <div class="proj-pt">Implemented pattern matching for structured and semi-structured PII data.</div>
+        <div class="proj-pt">Generates automated reports highlighting exposed sensitive data for security awareness.</div>
+      </div>
+      <div class="tags" style="margin-bottom:1rem">
+        <span class="tag hi">Python</span>
+        <span class="tag">Regex</span>
+        <span class="tag hi">Data Classification</span>
+        <span class="tag">Security Automation</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/priyanshisinghi" class="proj-link" target="_blank">⬡ GitHub</a>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="pbadge b-web">Full Stack</div>
+      <div class="proj-title">Personalized Notes Application (MERN)</div>
+      <div class="proj-date">Jun 2025 – Jul 2025</div>
+      <div class="proj-pts">
+        <div class="proj-pt">Full-stack notes application with REST APIs and local storage support using the MERN stack.</div>
+        <div class="proj-pt">Implemented CRUD operations with a user-friendly, responsive UI.</div>
+        <div class="proj-pt">Ensured efficient data handling and retrieval using MongoDB.</div>
+      </div>
+      <div class="tags" style="margin-bottom:1rem">
+        <span class="tag hi">MongoDB</span>
+        <span class="tag hi">Express.js</span>
+        <span class="tag hi">React.js</span>
+        <span class="tag hi">Node.js</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/priyanshisinghi" class="proj-link" target="_blank">⬡ GitHub</a>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="pbadge b-gui">GUI / Python</div>
+      <div class="proj-title">BMI Calculator (GUI)</div>
+      <div class="proj-date">Sep 2024</div>
+      <div class="proj-pts">
+        <div class="proj-pt">Interactive GUI-based BMI calculator for real-time health assessment using Python.</div>
+        <div class="proj-pt">Implemented input validation and dynamic result display for improved user experience.</div>
+        <div class="proj-pt">Designed a clean, intuitive interface using CustomTkinter.</div>
+      </div>
+      <div class="tags" style="margin-bottom:1rem">
+        <span class="tag hi">Python</span>
+        <span class="tag">CustomTkinter</span>
+        <span class="tag">GUI Development</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/priyanshisinghi" class="proj-link" target="_blank">⬡ GitHub</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACCOMPLISHMENTS -->
+<section id="accomplishments">
+  <div class="sl">Achievements &amp; Leadership</div>
+  <h2>Accomplishments &amp; <span>Extra-curriculars</span></h2>
+  <p class="sec-sub">Leadership roles, published research, competitions, and community contributions.</p>
+  <div class="acc-grid">
+    <div class="acc-card">
+      <div class="acc-icon gold">📄</div>
+      <div>
+        <div class="acc-title">Research Paper — VMI Detection</div>
+        <div class="acc-sub">2026 — "Visual Memory Injection Attacks: Detection via Entropy Analysis &amp; DOM Integrity Verification"</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon gold">📄</div>
+      <div>
+        <div class="acc-title">Published Research Paper</div>
+        <div class="acc-sub">SSCSDF 2025 — "Decentralized Currency Exchange Wallet for Travellers"</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon teal">🎨</div>
+      <div>
+        <div class="acc-title">Associate Design Head</div>
+        <div class="acc-sub">Hypervision, UPES · 2024–2025 — Led design initiatives &amp; creative workflows</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon teal">⚙️</div>
+      <div>
+        <div class="acc-title">Workflow Supervisor</div>
+        <div class="acc-sub">Hypervision, UPES · 2025–Present — Managed team operations &amp; execution</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon purple">🏅</div>
+      <div>
+        <div class="acc-title">Pehchan 3.0</div>
+        <div class="acc-sub">Participated in inter-college competition</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon gold">🚁</div>
+      <div>
+        <div class="acc-title">Drone Technology Bootcamp</div>
+        <div class="acc-sub">Completed hands-on drone technology training</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon purple">💻</div>
+      <div>
+        <div class="acc-title">Code Hustle 10.0</div>
+        <div class="acc-sub">Participated in competitive coding challenge</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon teal">🔷</div>
+      <div>
+        <div class="acc-title">IBM ICE Day</div>
+        <div class="acc-sub">Attended IBM Innovation &amp; Cloud Exploration event</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon gold">🎓</div>
+      <div>
+        <div class="acc-title">Academic Excellence</div>
+        <div class="acc-sub">CGPA 9.12/10 at UPES · 12th: 86.4% · 10th: 90%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section id="articles">
+  <div class="sl">SEO Blog</div>
+  <h2>Featured <span>Articles</span></h2>
+  <p class="sec-sub">Original, deeply researched articles from someone who actually builds in this space — not just writes about it.</p>
+  <div class="art-grid">
+
+    <div class="art-card">
+      <div class="art-kw">Primary KW: visual memory injection attack</div>
+      <div class="art-title">The Attack You Can't See: Inside Visual Memory Injection and Why It's Scarier Than SQL Injection</div>
+      <div class="art-exc">You've patched your SQL injection. You've added CSP headers. You've sanitized every input. And yet — an attacker is showing your users a completely different login screen than the one you built. No DOM changes. No network requests. Nothing in your logs. This is Visual Memory Injection, and it might be the most underestimated browser-level attack of 2025.</div>
+      <a href="blog-vmi.html" class="art-read">Read Article →</a>
+    </div>
+
+    <div class="art-card">
+      <div class="art-kw">Primary KW: social engineering attacks 2025</div>
+      <div class="art-title">I Almost Got Phished by an AI. Here's Exactly How It Happened (And What Saved Me)</div>
+      <div class="art-exc">It started with a perfectly worded LinkedIn message from someone I almost recognized. The grammar was flawless. The context was specific. The urgency felt real. This is not a story about being careless — it's about how AI-powered social engineering has gotten so good that the old rules for spotting phishing no longer apply. Here's what I learned, and how to stay ahead of it.</div>
+      <a href="blog-social-engineering.html" class="art-read">Read Article →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="sl">Get In Touch</div>
+    <h2>Let's <span>Connect</span></h2>
+    <p>Open to internship opportunities, freelance projects, and collaborations in cybersecurity or full-stack web development. Based in Dehradun — available remotely across India and worldwide.</p>
+    <div class="contact-links">
+      <a href="mailto:singhipriyanshi2004@gmail.com" class="clink">✉️ singhipriyanshi2004@gmail.com</a>
+      <a href="tel:+916376092237" class="clink">📞 +91 6376092237</a>
+      <a href="https://linkedin.com/in/priyanshi-singhi" target="_blank" class="clink">💼 linkedin.com/in/priyanshi-singhi</a>
+      <a href="https://github.com/priyanshisinghi" target="_blank" class="clink">⬡ github.com/priyanshisinghi</a>
+    </div>
+    <a href="mailto:singhipriyanshi2004@gmail.com" class="btn-primary" style="font-size:1rem;padding:1rem 2.5rem;">Say Hello →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed &amp; built by <a href="#hero">Priyanshi Singhi</a> · B.Tech CSE (Cyber Security &amp; Forensics) · UPES, Dehradun</p>
+  <p style="margin-top:6px;font-size:.73rem">Full Stack Developer · Cybersecurity Enthusiast · CGPA 9.12/10 · Open to Opportunities</p>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();window.scrollTo({top:t.offsetTop-75,behavior:'smooth'})}
+  });
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){en.target.style.opacity='1';en.target.style.transform='translateY(0) translateX(0)'}
+  });
+},{threshold:.07});
+document.querySelectorAll('.sk-card,.proj-card,.acc-card,.art-card,.info-card,.exp-card').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px)';
+  el.style.transition='opacity .5s ease,transform .5s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
