@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://priyanshisinghi.github.io/portfolio_website/sitemap.xml
