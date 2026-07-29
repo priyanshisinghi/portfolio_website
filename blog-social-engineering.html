@@ -1,112 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>I Almost Got Phished by an AI. Here's Exactly How It Happened | Priyanshi Singhi</title>
-<meta name="description" content="AI-powered social engineering attacks have evolved beyond grammar mistakes and suspicious links. Here's a first-person account of a near-miss with an AI phishing attack — and the exact red flags I almost missed.">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#09111f; --navy2:#0e1829; --navy3:#131f33;
-  --accent:#00e5c3; --accent2:#7b61ff; --gold:#f0a500;
-  --text:#e4e9f2; --muted:#7a8799; --border:rgba(255,255,255,0.07);
+<meta name="description" content="AI-powered social engineering has made the old phishing checklist useless. A first-hand account of a near-miss spear phishing attempt — and the six habits that actually catch these attacks.">
+<meta name="author" content="Priyanshi Singhi">
+<meta name="theme-color" content="#0B0B0A">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="I Almost Got Phished by an AI. Here's Exactly How It Happened">
+<meta property="og:description" content="Flawless grammar. Specific context. Real urgency. How AI-powered social engineering broke every rule I was taught about spotting phishing.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B0B0A'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%238CA396' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='1.8' fill='%23E9E5DD'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&f[]=switzer@300,400,500,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/article.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "I Almost Got Phished by an AI. Here's Exactly How It Happened (And What Saved Me)",
+  "description": "AI-powered social engineering has made the old phishing checklist useless. A first-hand account of a near-miss spear phishing attempt and the habits that caught it.",
+  "keywords": "social engineering attacks 2025, AI phishing, spear phishing, voice cloning, OSINT",
+  "author": {
+    "@type": "Person",
+    "name": "Priyanshi Singhi",
+    "url": "https://github.com/priyanshisinghi"
+  },
+  "publisher": { "@type": "Person", "name": "Priyanshi Singhi" },
+  "mainEntityOfPage": "https://priyanshisinghi.github.io/portfolio_website/blog-social-engineering.html"
 }
-html{scroll-behavior:smooth}
-body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;font-size:17px;line-height:1.8}
-
-nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(9,17,31,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--accent);text-decoration:none}
-.back{font-size:.85rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s}
-.back:hover{color:var(--accent)}
-
-.article-wrap{max-width:760px;margin:0 auto;padding:8rem 5% 5rem}
-
-.article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;margin-bottom:2rem}
-.meta-tag{font-size:.72rem;letter-spacing:.1em;color:var(--accent);font-weight:600;text-transform:uppercase;background:rgba(0,229,195,.08);border:1px solid rgba(0,229,195,.15);padding:3px 10px;border-radius:100px}
-.meta-info{font-size:.83rem;color:var(--muted)}
-
-h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4.5vw,2.9rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:#fff;margin-bottom:1.2rem}
-.article-intro{font-size:1.1rem;color:var(--muted);line-height:1.85;margin-bottom:2.5rem;border-left:3px solid var(--accent);padding-left:1.2rem;font-style:italic;font-weight:300}
-
-h2{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:#fff;margin:2.5rem 0 .8rem;letter-spacing:-.01em}
-h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);margin:1.8rem 0 .6rem}
-p{color:var(--muted);margin-bottom:1.1rem;font-weight:300}
-p strong{color:var(--text);font-weight:500}
-p em{color:var(--accent);font-style:normal;font-weight:500}
-
-.callout{background:rgba(0,229,195,.05);border:1px solid rgba(0,229,195,.15);border-radius:12px;padding:1.2rem 1.4rem;margin:1.8rem 0}
-.callout p{margin:0;color:var(--text);font-size:.95rem}
-.callout p strong{color:var(--accent)}
-
-.danger-box{background:rgba(255,80,80,.05);border:1px solid rgba(255,100,100,.18);border-radius:12px;padding:1.2rem 1.4rem;margin:1.8rem 0}
-.danger-box p{margin:0;color:#ffb3b3;font-size:.95rem}
-
-.story-block{background:var(--navy2);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:1.2rem 1.4rem;margin:1.8rem 0}
-.story-block p{margin:0;color:var(--text);font-size:.95rem;font-style:italic}
-.story-label{font-size:.72rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
-
-ul,ol{padding-left:1.5rem;margin-bottom:1.1rem}
-li{color:var(--muted);margin-bottom:.5rem;font-weight:300}
-li strong{color:var(--text);font-weight:500}
-
-.red-flag{background:rgba(255,100,100,.05);border:1px solid rgba(255,100,100,.15);border-radius:10px;padding:.8rem 1.1rem;margin:.6rem 0;display:flex;gap:.7rem;align-items:flex-start}
-.rf-icon{color:#ff8080;font-size:1rem;flex-shrink:0;margin-top:2px}
-.rf-text{color:#ffb3b3;font-size:.9rem;font-weight:300}
-.rf-text strong{color:#ffd0d0;font-weight:500}
-
-.green-flag{background:rgba(0,229,195,.04);border:1px solid rgba(0,229,195,.12);border-radius:10px;padding:.8rem 1.1rem;margin:.6rem 0;display:flex;gap:.7rem;align-items:flex-start}
-.gf-icon{color:var(--accent);font-size:1rem;flex-shrink:0;margin-top:2px}
-.gf-text{color:#a8e6d8;font-size:.9rem;font-weight:300}
-.gf-text strong{color:var(--accent);font-weight:500}
-
-.divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
-
-.faq-item{margin-bottom:1.5rem}
-.faq-q{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem}
-.faq-a{color:var(--muted);font-size:.95rem;font-weight:300}
-
-.author-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:1.4rem;margin-top:3rem;display:flex;gap:1rem;align-items:flex-start}
-.author-icon{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Syne',sans-serif;color:var(--navy);font-size:1.1rem;flex-shrink:0}
-.author-name{font-weight:600;color:#fff;font-size:.95rem;margin-bottom:3px}
-.author-bio{font-size:.83rem;color:var(--muted);font-weight:300}
-
-.related{margin-top:3rem}
-.related h3{color:#fff;font-family:'Syne',sans-serif;margin-bottom:1rem}
-.related-link{display:block;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;color:var(--text);font-size:.9rem;transition:all .2s;margin-bottom:.7rem}
-.related-link:hover{border-color:var(--accent);color:var(--accent)}
-
-footer{text-align:center;padding:2rem 5%;border-top:1px solid var(--border);font-size:.8rem;color:var(--muted);margin-top:3rem}
-footer a{color:var(--accent);text-decoration:none}
-</style>
+</script>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="logo">PS.</a>
-  <a href="index.html#articles" class="back">← Back to Portfolio</a>
-</nav>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" data-progress aria-hidden="true"></div>
+<div class="cursor-ring" data-cursor-ring aria-hidden="true"></div>
+<div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
 
-<div class="article-wrap">
+<header class="nav nav--read" data-nav>
+  <a href="index.html" class="nav__mark" aria-label="Priyanshi Singhi — home"><i aria-hidden="true"></i>PS</a>
+  <a href="index.html#writing" class="back"><span aria-hidden="true">←</span><span>Back to portfolio</span></a>
+</header>
 
-  <div class="article-meta">
-    <span class="meta-tag">Social Engineering</span>
-    <span class="meta-tag">AI Threats</span>
-    <span class="meta-tag">Phishing 2025</span>
-    <span class="meta-info">By Priyanshi Singhi · 8 min read · 2026</span>
+<main>
+
+<header class="read-head">
+  <div class="read-head__inner">
+    <div class="read-head__kicker">
+      <span class="chip">Social Engineering</span>
+      <span class="chip">AI Threats</span>
+      <span class="chip">Phishing 2025</span>
+      <span class="chip chip--plain">8 min read</span>
+    </div>
+
+    <h1 class="mask"><span>I almost got phished by an AI. Here's exactly how it happened.</span></h1>
+
+    <p class="read-head__standfirst" data-reveal>
+      It started with a perfectly worded LinkedIn message from someone I almost recognized. The
+      grammar was flawless. The context was specific. The urgency felt real. This is not a story
+      about being careless — it's about how AI-powered social engineering has gotten so good that
+      the old rules for spotting phishing no longer apply.
+    </p>
+
+    <div class="read-head__byline" data-reveal>
+      <span>By <b>Priyanshi Singhi</b></span>
+      <span>First-hand account</span>
+      <span><b>2026</b></span>
+    </div>
   </div>
+</header>
 
-  <h1>I Almost Got Phished by an AI. Here's Exactly How It Happened (And What Saved Me)</h1>
+<article class="prose">
 
-  <p class="article-intro">It started with a perfectly worded LinkedIn message from someone I almost recognized. The grammar was flawless. The context was specific. The urgency felt real. This is not a story about being careless — it's about how AI-powered social engineering has gotten so good that the old rules for spotting phishing no longer apply.</p>
-
-  <h2>The Message That Started It</h2>
+  <h2 style="border-top:0;padding-top:0;margin-top:0">The message that started it</h2>
 
   <p>It was a Tuesday evening. I was wrapping up a lab session on Burp Suite and my LinkedIn had a notification — a connection request plus a message from someone named "Arjun Mehta" who worked at a mid-sized cybersecurity firm I'd actually heard of.</p>
 
-  <div class="story-block">
-    <div class="story-label">The Message (reconstructed from memory)</div>
+  <div class="story">
+    <div class="story__k">The message — reconstructed from memory</div>
     <p>"Hi Priyanshi — I came across your work on adversarial prompt injection through a UPES alumni thread. Your approach to input validation for LLMs is exactly the kind of thinking we need for a project we're running internally. We have a short paid contract (2 weeks, remote) opening up. Would love to share the brief. Are you free for a quick call this week?"</p>
   </div>
 
@@ -114,70 +95,75 @@ footer a{color:var(--accent);text-decoration:none}
 
   <p>I accepted the connection and said yes to the call.</p>
 
-  <h2>What Almost Got Me</h2>
+  <h2>What almost got me</h2>
 
   <p>The "call" was a Google Meet link. Arjun joined — or what I thought was Arjun. The video was slightly pixelated (he apologized for a weak connection). His voice was clear. He spoke knowledgeably about LLM security, mentioned specific CVEs I recognized, and name-dropped a real researcher in the space whose work I knew.</p>
 
   <p>Then came the ask: "We use an internal research platform. I'll send you a trial access link — just verify your GitHub identity through it so we can set up your permissions."</p>
 
-  <div class="danger-box">
-    <p><strong>That was the moment.</strong> Everything before it was perfectly engineered setup. The entire 20-minute conversation existed to make that one sentence feel routine rather than suspicious.</p>
+  <div class="note note--warn">
+    <div class="note__k">That was the moment</div>
+    <p>Everything before it was perfectly engineered setup. The entire 20-minute conversation existed to make that one sentence feel routine rather than suspicious.</p>
   </div>
 
   <p>I paused. Something felt slightly off about the phrasing — "verify your GitHub identity" is not how legitimate platforms talk. I asked for the company's official domain to check the platform URL against. There was a half-second delay before he gave me one — and when I Googled it, the domain had been registered 3 months ago.</p>
 
   <p>I ended the call, checked the LinkedIn profile more carefully, and found that every post on it was between 18–24 months old. No activity since. Classic dormant account purchased or compromised for use in targeted attacks.</p>
 
-  <h2>How AI Made This Attack Possible</h2>
+  <h2>How AI made this attack possible</h2>
 
   <p>Here's what I think happened, and what makes this fundamentally different from phishing attempts of 5 years ago:</p>
 
-  <h3>1. The scraping was AI-assisted</h3>
+  <h3>The scraping was AI-assisted</h3>
   <p>My project name, my university, my area of focus — all public on LinkedIn and my GitHub. An AI agent scraping public profiles and crafting personalized opening messages is trivially easy today. The message didn't feel templated because it <em>wasn't</em> — it was generated specifically for me.</p>
 
-  <h3>2. The voice on the call was likely cloned or synthesized</h3>
+  <h3>The voice on the call was likely cloned or synthesized</h3>
   <p>Real-time voice synthesis has gotten disturbingly good. Tools exist today that can synthesize a natural-sounding voice from minimal training data — and maintain conversation coherence through AI-assisted scripting. The "bad connection" excuse for slightly off video is a classic tell, but it's plausible enough that most people don't question it.</p>
 
-  <h3>3. The old checklist doesn't work anymore</h3>
+  <h3>The old checklist doesn't work anymore</h3>
   <p>Remember the phishing checklist your university's IT department gave you? Let me go through it:</p>
 
-  <div class="red-flag">
-    <div class="rf-icon">✗</div>
-    <div class="rf-text"><strong>"Look for spelling and grammar mistakes"</strong> — There were none. AI writes better English than most humans.</div>
-  </div>
-  <div class="red-flag">
-    <div class="rf-icon">✗</div>
-    <div class="rf-text"><strong>"Be suspicious of unsolicited contact"</strong> — LinkedIn messages from professionals are routine. This felt like every other recruiter message I'd received.</div>
-  </div>
-  <div class="red-flag">
-    <div class="rf-icon">✗</div>
-    <div class="rf-text"><strong>"Check if they know personal details about you"</strong> — They did. Detailed ones. Scraped from public sources.</div>
-  </div>
-  <div class="red-flag">
-    <div class="rf-icon">✗</div>
-    <div class="rf-text"><strong>"Trust your gut feeling"</strong> — My gut felt fine until the very last moment. That's the whole point of the buildup.</div>
-  </div>
-
-  <h2>What Actually Saved Me</h2>
-
-  <div class="green-flag">
-    <div class="gf-icon">✓</div>
-    <div class="gf-text"><strong>Noticing unnatural phrasing in the technical ask.</strong> "Verify your GitHub identity" is not how real platforms phrase authorization flows. Domain-specific language inconsistencies are hard for AI to perfectly emulate.</div>
-  </div>
-  <div class="green-flag">
-    <div class="gf-icon">✓</div>
-    <div class="gf-text"><strong>Domain registration date check.</strong> <code>whois</code> lookup on any domain takes 10 seconds. A 3-month-old domain for a company that claims 5 years of operation is an instant red flag.</div>
-  </div>
-  <div class="green-flag">
-    <div class="gf-icon">✓</div>
-    <div class="gf-text"><strong>Activity gap on the LinkedIn profile.</strong> 18 months of silence followed by sudden targeted outreach is a pattern worth looking for. Real professionals post occasionally.</div>
-  </div>
-  <div class="green-flag">
-    <div class="gf-icon">✓</div>
-    <div class="gf-text"><strong>Asking for the company's official domain proactively.</strong> A legitimate recruiter will give this without hesitation. A microsecond of delay before answering is meaningful.</div>
+  <div class="flags">
+    <div class="flag flag--no">
+      <div class="flag__m">✗</div>
+      <div class="flag__t"><strong>"Look for spelling and grammar mistakes"</strong> — There were none. AI writes better English than most humans.</div>
+    </div>
+    <div class="flag flag--no">
+      <div class="flag__m">✗</div>
+      <div class="flag__t"><strong>"Be suspicious of unsolicited contact"</strong> — LinkedIn messages from professionals are routine. This felt like every other recruiter message I'd received.</div>
+    </div>
+    <div class="flag flag--no">
+      <div class="flag__m">✗</div>
+      <div class="flag__t"><strong>"Check if they know personal details about you"</strong> — They did. Detailed ones. Scraped from public sources.</div>
+    </div>
+    <div class="flag flag--no">
+      <div class="flag__m">✗</div>
+      <div class="flag__t"><strong>"Trust your gut feeling"</strong> — My gut felt fine until the very last moment. That's the whole point of the buildup.</div>
+    </div>
   </div>
 
-  <h2>The New Rules for Spotting AI Phishing</h2>
+  <h2>What actually saved me</h2>
+
+  <div class="flags">
+    <div class="flag flag--yes">
+      <div class="flag__m">✓</div>
+      <div class="flag__t"><strong>Noticing unnatural phrasing in the technical ask.</strong> "Verify your GitHub identity" is not how real platforms phrase authorization flows. Domain-specific language inconsistencies are hard for AI to perfectly emulate.</div>
+    </div>
+    <div class="flag flag--yes">
+      <div class="flag__m">✓</div>
+      <div class="flag__t"><strong>Domain registration date check.</strong> A <code>whois</code> lookup on any domain takes 10 seconds. A 3-month-old domain for a company that claims 5 years of operation is an instant red flag.</div>
+    </div>
+    <div class="flag flag--yes">
+      <div class="flag__m">✓</div>
+      <div class="flag__t"><strong>Activity gap on the LinkedIn profile.</strong> 18 months of silence followed by sudden targeted outreach is a pattern worth looking for. Real professionals post occasionally.</div>
+    </div>
+    <div class="flag flag--yes">
+      <div class="flag__m">✓</div>
+      <div class="flag__t"><strong>Asking for the company's official domain proactively.</strong> A legitimate recruiter will give this without hesitation. A microsecond of delay before answering is meaningful.</div>
+    </div>
+  </div>
+
+  <h2>The new rules for spotting AI phishing</h2>
 
   <p>The old checklist is dead. Here's what actually works in 2025:</p>
 
@@ -190,11 +176,12 @@ footer a{color:var(--accent);text-decoration:none}
     <li><strong>Slow down when something feels flattering.</strong> Attackers know that professional validation makes people lower their guard. The more an outreach compliments your specific work, the more scrutiny it should get, not less.</li>
   </ol>
 
-  <div class="callout">
-    <p><strong>The hardest part to accept:</strong> This attack would have fooled most cybersecurity students — and a lot of professionals. That's not a knock on anyone. It's a statement about how much the threat has evolved. Being security-aware is no longer sufficient. You need security <em>habits</em> that activate before your judgment does.</p>
+  <div class="note">
+    <div class="note__k">The hardest part to accept</div>
+    <p>This attack would have fooled most cybersecurity students — and a lot of professionals. That's not a knock on anyone. It's a statement about how much the threat has evolved. Being security-aware is no longer sufficient. You need security <strong>habits</strong> that activate before your judgment does.</p>
   </div>
 
-  <h2>A Note on Reporting</h2>
+  <h2>A note on reporting</h2>
 
   <p>I reported the LinkedIn profile. It was taken down within 48 hours. I also checked the domain I'd been given — it was serving a fake GitHub OAuth page designed to harvest tokens. I submitted it to PhishTank and Google Safe Browsing. Within a week, both had flagged it.</p>
 
@@ -202,50 +189,58 @@ footer a{color:var(--accent);text-decoration:none}
 
   <hr class="divider">
 
-  <h2>FAQ</h2>
+  <h2 style="border-top:0;padding-top:0">Frequently asked questions</h2>
 
-  <div class="faq-item">
-    <div class="faq-q">How common are AI-generated spear phishing attacks in 2025?</div>
-    <div class="faq-a">Significantly more common than most people realize. Security researchers have documented a 60%+ year-over-year increase in targeted AI-assisted phishing attacks since 2023. The barrier to creating personalized, convincing attacks has dropped dramatically with accessible LLM APIs.</div>
+  <div class="faq">
+    <div class="faq__item">
+      <div class="faq__q">How common are AI-generated spear phishing attacks in 2025?</div>
+      <div class="faq__a">Significantly more common than most people realize. Security researchers have documented a 60%+ year-over-year increase in targeted AI-assisted phishing attacks since 2023. The barrier to creating personalized, convincing attacks has dropped dramatically with accessible LLM APIs.</div>
+    </div>
+    <div class="faq__item">
+      <div class="faq__q">Are AI phishing attacks only targeting tech professionals?</div>
+      <div class="faq__a">No — but tech professionals are disproportionately targeted because their credentials (GitHub, AWS, cloud platforms) have high resale value and can enable further attacks. Finance and HR professionals are also heavily targeted for credential and payment fraud.</div>
+    </div>
+    <div class="faq__item">
+      <div class="faq__q">What's the best tool to check if a domain is suspicious?</div>
+      <div class="faq__a">For quick checks: whois.domaintools.com for registration age, VirusTotal for reputation, and urlscan.io for a visual scan of what a URL actually loads. Get comfortable with all three — they take under 2 minutes combined.</div>
+    </div>
+    <div class="faq__item">
+      <div class="faq__q">Can my organization protect against AI social engineering at scale?</div>
+      <div class="faq__a">Training alone won't cut it anymore. Organizations need to implement verification protocols for any request involving credentials or access changes — regardless of how trusted the source seems. Out-of-band verification (a phone call to a known number, not one provided in the suspicious message) is the most reliable defense.</div>
+    </div>
   </div>
 
-  <div class="faq-item">
-    <div class="faq-q">Are AI phishing attacks only targeting tech professionals?</div>
-    <div class="faq-a">No — but tech professionals are disproportionately targeted because their credentials (GitHub, AWS, cloud platforms) have high resale value and can enable further attacks. Finance and HR professionals are also heavily targeted for credential and payment fraud.</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">What's the best tool to check if a domain is suspicious?</div>
-    <div class="faq-a">For quick checks: whois.domaintools.com for registration age, VirusTotal for reputation, and urlscan.io for a visual scan of what a URL actually loads. Get comfortable with all three — they take under 2 minutes combined.</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">Can my organization protect against AI social engineering at scale?</div>
-    <div class="faq-a">Training alone won't cut it anymore. Organizations need to implement verification protocols for any request involving credentials or access changes — regardless of how trusted the source seems. Out-of-band verification (a phone call to a known number, not one provided in the suspicious message) is the most reliable defense.</div>
-  </div>
-
-  <hr class="divider">
-
-  <div class="author-box">
-    <div class="author-icon">PS</div>
+  <div class="author">
+    <div class="author__mark">PS</div>
     <div>
-      <div class="author-name">Priyanshi Singhi</div>
-      <div class="author-bio">B.Tech CSE (Cyber Security & Forensics) at UPES, Dehradun · CGPA 9.12/10 · Builder of Cortex Threat Intelligence Dashboard · singhipriyanshi2004@gmail.com</div>
+      <div class="author__name">Priyanshi Singhi</div>
+      <p class="author__bio">B.Tech CSE (Cyber Security &amp; Forensics) at UPES, Dehradun · CGPA 9.22/10 · Builder of the CORTEX threat intelligence dashboard · singhipriyanshi2004@gmail.com</p>
     </div>
   </div>
 
   <div class="related">
-    <h3>Continue Reading</h3>
-    <a href="blog-vmi.html" class="related-link">→ The Attack You Can't See: Inside Visual Memory Injection</a>
-    <a href="index.html#projects" class="related-link">→ See my Cortex Threat Intelligence project</a>
-    <a href="index.html#contact" class="related-link">→ Connect with me on LinkedIn</a>
+    <div class="related__k">Continue reading</div>
+    <a href="blog-vmi.html" class="related-link">The attack you can't see: inside Visual Memory Injection <span aria-hidden="true">→</span></a>
+    <a href="index.html#projects" class="related-link">See my CORTEX threat intelligence project <span aria-hidden="true">→</span></a>
+    <a href="index.html#contact" class="related-link">Connect with me on LinkedIn <span aria-hidden="true">→</span></a>
   </div>
 
-</div>
+</article>
+</main>
 
-<footer>
-  <p>Written by <a href="index.html">Priyanshi Singhi</a> · B.Tech CSE (Cyber Security & Forensics) · UPES, Dehradun</p>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__meta">
+      Written by <strong>Priyanshi Singhi</strong><br>
+      B.Tech CSE · Cyber Security &amp; Forensics · UPES Dehradun
+    </div>
+    <div class="footer__meta" style="text-align:right">
+      <a href="index.html">Back to portfolio</a> · © <span data-year>2026</span>
+    </div>
+  </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

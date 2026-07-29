@@ -1,108 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Can Someone Hijack an AI Chatbot With a Single Image? | Priyanshi Singhi</title>
 <meta name="description" content="Visual Memory Injection attacks let hackers steer AI conversations using invisible image perturbations. Here's what we found when we built and tested one — and how to stop it.">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#09111f; --navy2:#0e1829; --navy3:#131f33;
-  --accent:#00e5c3; --accent2:#7b61ff; --gold:#f0a500;
-  --text:#e4e9f2; --muted:#7a8799; --border:rgba(255,255,255,0.07);
+<meta name="author" content="Priyanshi Singhi">
+<meta name="theme-color" content="#0B0B0A">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Can Someone Hijack an AI Chatbot With a Single Image?">
+<meta property="og:description" content="We built a Visual Memory Injection attack on CLIP ViT-L/14, tested four defenses against it, and found out why the obvious ones fail.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B0B0A'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%238CA396' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='1.8' fill='%23E9E5DD'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&f[]=switzer@300,400,500,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/article.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Can Someone Hijack an AI Chatbot With a Single Image? We Built an Attack to Find Out",
+  "description": "Visual Memory Injection attacks let hackers steer AI conversations using invisible image perturbations. Here's what we found when we built and tested one — and how to stop it.",
+  "keywords": "visual memory injection attack, adversarial machine learning, CLIP, vision-language model security, PGD attack",
+  "author": {
+    "@type": "Person",
+    "name": "Priyanshi Singhi",
+    "url": "https://github.com/priyanshisinghi"
+  },
+  "publisher": { "@type": "Person", "name": "Priyanshi Singhi" },
+  "mainEntityOfPage": "https://priyanshisinghi.github.io/portfolio_website/blog-vmi.html"
 }
-html{scroll-behavior:smooth}
-body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;font-size:17px;line-height:1.8}
-
-nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(9,17,31,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--accent);text-decoration:none}
-.back{font-size:.85rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s}
-.back:hover{color:var(--accent)}
-
-.article-wrap{max-width:760px;margin:0 auto;padding:8rem 5% 5rem}
-
-.article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;margin-bottom:2rem}
-.meta-tag{font-size:.72rem;letter-spacing:.1em;color:var(--accent);font-weight:600;text-transform:uppercase;background:rgba(0,229,195,.08);border:1px solid rgba(0,229,195,.15);padding:3px 10px;border-radius:100px}
-.meta-info{font-size:.83rem;color:var(--muted)}
-
-h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4.5vw,2.9rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:#fff;margin-bottom:1.2rem}
-.article-intro{font-size:1.1rem;color:var(--muted);line-height:1.85;margin-bottom:2.5rem;border-left:3px solid var(--accent);padding-left:1.2rem;font-style:italic;font-weight:300}
-
-h2{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:#fff;margin:2.5rem 0 .8rem;letter-spacing:-.01em}
-h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);margin:1.8rem 0 .6rem}
-p{color:var(--muted);margin-bottom:1.1rem;font-weight:300}
-p strong{color:var(--text);font-weight:500}
-p em{color:var(--accent);font-style:normal;font-weight:500}
-
-.callout{background:rgba(0,229,195,.05);border:1px solid rgba(0,229,195,.15);border-radius:12px;padding:1.2rem 1.4rem;margin:1.8rem 0}
-.callout p{margin:0;color:var(--text);font-size:.95rem}
-.callout p strong{color:var(--accent)}
-
-.danger-box{background:rgba(255,80,80,.05);border:1px solid rgba(255,100,100,.18);border-radius:12px;padding:1.2rem 1.4rem;margin:1.8rem 0}
-.danger-box p{margin:0;color:#ffb3b3;font-size:.95rem}
-
-.result-box{background:rgba(123,97,255,.05);border:1px solid rgba(123,97,255,.18);border-radius:12px;padding:1.2rem 1.4rem;margin:1.8rem 0}
-.result-box p{margin:0;color:#c4b5fd;font-size:.95rem}
-.result-box p strong{color:#a78bfa}
-
-.code-block{background:#0d1626;border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;margin:1.5rem 0;font-family:'Courier New',monospace;font-size:.85rem;color:#a8d5c2;line-height:1.7;overflow-x:auto}
-.code-comment{color:#4a6a5a}
-
-/* Results table */
-.results-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.88rem}
-.results-table th{background:rgba(0,229,195,.08);color:var(--accent);font-weight:600;padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--border);font-family:'Syne',sans-serif;letter-spacing:.04em;font-size:.78rem;text-transform:uppercase}
-.results-table td{padding:.7rem 1rem;border-bottom:1px solid var(--border);color:var(--muted);font-weight:300}
-.results-table tr:last-child td{border-bottom:none}
-.yes{color:#00e5c3;font-weight:500}
-.no{color:#ff8080;font-weight:500}
-
-ul,ol{padding-left:1.5rem;margin-bottom:1.1rem}
-li{color:var(--muted);margin-bottom:.5rem;font-weight:300}
-li strong{color:var(--text);font-weight:500}
-
-.divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
-
-.faq-item{margin-bottom:1.5rem}
-.faq-q{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem}
-.faq-a{color:var(--muted);font-size:.95rem;font-weight:300}
-
-.author-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:1.4rem;margin-top:3rem;display:flex;gap:1rem;align-items:flex-start}
-.author-icon{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Syne',sans-serif;color:var(--navy);font-size:1.1rem;flex-shrink:0}
-.author-name{font-weight:600;color:#fff;font-size:.95rem;margin-bottom:3px}
-.author-bio{font-size:.83rem;color:var(--muted);font-weight:300}
-
-.related{margin-top:3rem}
-.related h3{color:#fff;margin-bottom:1rem}
-.related-link{display:block;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;color:var(--text);font-size:.9rem;transition:all .2s;margin-bottom:.7rem}
-.related-link:hover{border-color:var(--accent);color:var(--accent)}
-
-footer{text-align:center;padding:2rem 5%;border-top:1px solid var(--border);font-size:.8rem;color:var(--muted);margin-top:3rem}
-footer a{color:var(--accent);text-decoration:none}
-</style>
+</script>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="logo">PS.</a>
-  <a href="index.html#articles" class="back">← Back to Portfolio</a>
-</nav>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" data-progress aria-hidden="true"></div>
+<div class="cursor-ring" data-cursor-ring aria-hidden="true"></div>
+<div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
 
-<div class="article-wrap">
+<header class="nav nav--read" data-nav>
+  <a href="index.html" class="nav__mark" aria-label="Priyanshi Singhi — home"><i aria-hidden="true"></i>PS</a>
+  <a href="index.html#writing" class="back"><span aria-hidden="true">←</span><span>Back to portfolio</span></a>
+</header>
 
-  <div class="article-meta">
-    <span class="meta-tag">AI Security</span>
-    <span class="meta-tag">Adversarial ML</span>
-    <span class="meta-tag">Research</span>
-    <span class="meta-info">By Priyanshi Singhi · 10 min read</span>
+<main>
+
+<header class="read-head">
+  <div class="read-head__inner">
+    <div class="read-head__kicker">
+      <span class="chip">AI Security</span>
+      <span class="chip">Adversarial ML</span>
+      <span class="chip">Research</span>
+      <span class="chip chip--plain">10 min read</span>
+    </div>
+
+    <h1 class="mask"><span>Can someone hijack an AI chatbot with a single image?</span></h1>
+
+    <p class="read-head__standfirst" data-reveal>
+      Visual Memory Injection attacks let hackers steer entire AI conversations using a single
+      image — with perturbations so small you literally cannot see them. Here's what we found when
+      we built one, tested four defenses against it, and discovered why the obvious solutions
+      completely fail.
+    </p>
+
+    <div class="read-head__byline" data-reveal>
+      <span>By <b>Priyanshi Singhi</b></span>
+      <span>Co-authored with Aadit Gulati</span>
+      <span>CLIP ViT-L/14 · PGD · <b>80% attack success</b></span>
+    </div>
   </div>
+</header>
 
-  <h1>Can Someone Hijack an AI Chatbot With a Single Image? We Built an Attack to Find Out</h1>
+<article class="prose">
 
-  <p class="article-intro">Visual Memory Injection attacks let hackers steer entire AI conversations using a single image — with perturbations so small you literally cannot see them. Here's what we found when we built one, tested four defenses against it, and discovered why the obvious solutions completely fail.</p>
-
-  <h2>I Want to Tell You About a Strange Kind of Attack</h2>
+  <h2 style="border-top:0;padding-top:0;margin-top:0">I want to tell you about a strange kind of attack</h2>
 
   <p>Imagine you're chatting with an AI assistant. You upload a photo — maybe it's a product image, a document, or a screenshot — and ask a question about it. The AI responds. You ask a few more questions. The conversation feels completely normal.</p>
 
@@ -110,7 +90,7 @@ footer a{color:var(--accent);text-decoration:none}
 
   <p>This is called a <strong>Visual Memory Injection (VMI) attack</strong>, and it's the vulnerability my co-author Aadit Gulati and I spent several months studying, building, and — importantly — figuring out how to catch. Our findings were published at SSCSDF 2025.</p>
 
-  <h2>How AI Chatbots Actually Handle Images</h2>
+  <h2>How AI chatbots actually handle images</h2>
 
   <p>To understand why this attack works, you need to understand what happens when a Vision-Language Model (VLM) like LLaVA or GPT-4V receives an image.</p>
 
@@ -120,39 +100,39 @@ footer a{color:var(--accent);text-decoration:none}
 
   <p>If you can manipulate the image's pixels in just the right way — invisibly — you can change what that vector looks like to the model. You can point it toward a completely different concept. And because that vector persists across every turn, every response in the entire conversation gets influenced by it.</p>
 
-  <div class="danger-box">
-    <p><strong>What makes this different from prompt injection:</strong> There's no unusual text, no suspicious link, no visible change to the image. Unlike prompt injection or jailbreak attacks, the manipulation exists entirely within the latent representation the encoder derives from pixel values. There's nothing to see.</p>
+  <div class="note note--warn">
+    <div class="note__k">What makes this different from prompt injection</div>
+    <p>There's no unusual text, no suspicious link, no visible change to the image. Unlike prompt injection or jailbreak attacks, the manipulation exists entirely within the latent representation the encoder derives from pixel values. There's nothing to see.</p>
   </div>
 
-  <h2>Building the Attack</h2>
+  <h2>Building the attack</h2>
 
   <p>We used <strong>Projected Gradient Descent (PGD)</strong> to craft adversarial images. The objective: change the image's pixel values as little as possible while moving its internal embedding as far as possible toward a target concept chosen by the attacker.</p>
 
   <p>The perturbation budget was tight — changes bounded to <strong>≤ 8/255 of the full pixel intensity range</strong>. That's a constraint tight enough that the original and attacked images are genuinely perceptually indistinguishable. We ran 200 PGD iterations per image with a step size of 1/255, projecting back onto the ε-ball after each update.</p>
 
-  <div class="code-block">
-<span class="code-comment"># Core PGD attack formulation</span>
-<span class="code-comment"># Minimize cosine distance between adversarial embedding and target</span>
-min over δ: 1 − cosine_sim( f(x + δ), t )
-subject to: ||δ||∞ ≤ ε = 8/255
+  <div class="code"><span class="c"># Core PGD attack formulation</span>
+<span class="c"># Minimize cosine distance between adversarial embedding and target</span>
+<span class="hl">min over δ:</span>  1 − cosine_sim( f(x + δ), t )
+<span class="hl">subject to:</span>  ||δ||∞ ≤ ε = 8/255
 
-<span class="code-comment"># f = CLIP ViT-L/14 encoder</span>
-<span class="code-comment"># x = clean image (3, 224, 224)</span>
-<span class="code-comment"># t = attacker-specified target embedding</span>
-<span class="code-comment"># δ = perturbation initialized from Uniform(−ε, ε)</span>
-  </div>
+<span class="c"># f = CLIP ViT-L/14 encoder</span>
+<span class="c"># x = clean image (3, 224, 224)</span>
+<span class="c"># t = attacker-specified target embedding</span>
+<span class="c"># δ = perturbation initialized from Uniform(−ε, ε)</span></div>
 
   <p>We tested this against 20 source-target image pairs, where each target was drawn 50 positions ahead in the sorted COCO dataset — far enough apart to ensure they were semantically dissimilar. The results were striking.</p>
 
-  <div class="result-box">
-    <p><strong>Attack results:</strong> 80% success rate (16/20 images). Mean cosine shift of 0.31. Target cosine similarity increased from 0.52 before the attack to 0.77 afterward — a gain of 0.25 achieved entirely through perturbations no human observer can detect. The four failures all involved source-target pairs that were already semantically similar, where the ε budget wasn't sufficient to close the remaining gap.</p>
+  <div class="note note--result">
+    <div class="note__k">Attack results</div>
+    <p><strong>80% success rate (16/20 images).</strong> Mean cosine shift of 0.31. Target cosine similarity increased from 0.52 before the attack to 0.77 afterward — a gain of 0.25 achieved entirely through perturbations no human observer can detect. The four failures all involved source-target pairs that were already semantically similar, where the ε budget wasn't sufficient to close the remaining gap.</p>
   </div>
 
-  <h2>Testing the Defenses — and Getting a Surprise</h2>
+  <h2>Testing the defenses — and getting a surprise</h2>
 
   <p>Here's the part that genuinely changed how I think about AI security. We evaluated four detection methods. Two of them failed so badly they performed below random chance. And the reason why is almost elegant.</p>
 
-  <h3>The Two That Failed: Embedding-Space Detectors</h3>
+  <h3>The two that failed: embedding-space detectors</h3>
 
   <p><strong>Isolation Forest anomaly detection</strong> trained on 200 benign image embeddings, then scored incoming images against that reference distribution. It achieved an AUC of 0.073 — far below the random baseline of 0.5. <strong>Nearest Neighbour detection</strong>, which measured each image's cosine distance to its five closest benign neighbors, hit AUC 0.432, also below chance.</p>
 
@@ -160,11 +140,12 @@ subject to: ||δ||∞ ≤ ε = 8/255
 
   <p>This isn't a flaw in those algorithms. It's a fundamental consequence of how PGD works. <strong>The attack deliberately steers adversarial embeddings toward specific natural image locations</strong> — because the target is a real image. So the adversarial embedding ends up surrounded by legitimate embeddings, looking completely normal. Any defense that asks "does this embedding look weird?" will fail, because by design, it doesn't.</p>
 
-  <div class="callout">
-    <p><strong>The key insight:</strong> Good defenses must rely on metrics that lie orthogonal to the goal of PGD. If PGD doesn't have to disturb a particular signal to succeed, detecting that signal won't catch the attack.</p>
+  <div class="note">
+    <div class="note__k">The key insight</div>
+    <p>Good defenses must rely on metrics that lie <strong>orthogonal to the goal of PGD</strong>. If PGD doesn't have to disturb a particular signal to succeed, detecting that signal won't catch the attack.</p>
   </div>
 
-  <h3>The Two That Worked</h3>
+  <h3>The two that worked</h3>
 
   <p><strong>Feature Squeezing</strong> subjects each image to three transformations — JPEG compression at quality 75, Gaussian blur with radius 1, and bit-depth reduction to 32 levels — and measures how much the embedding changes. The intuition: adversarial perturbations occupy a precise narrow region of pixel space. Low-level transformations that barely affect clean images disrupt that precision entirely, producing a large embedding shift. Clean images stay stable; attacked images don't.</p>
 
@@ -172,61 +153,61 @@ subject to: ||δ||∞ ≤ ε = 8/255
 
   <p><strong>Conversation Drift Detection</strong> is the defense we introduced in this paper, and it's the result I'm most proud of. Instead of looking at the image at all, it watches the conversation. Every response is encoded using SentenceTransformer (all-MiniLM-L6-v2) and two signals are computed: how far the final response has drifted from the opening turn, and whether successive responses keep moving in the same direction.</p>
 
-  <div class="code-block">
-<span class="code-comment"># Conversation Drift score formula</span>
-score = 0.5 × d_final + 0.5 × consistency
+  <div class="code"><span class="c"># Conversation Drift score formula</span>
+<span class="hl">score</span> = 0.5 × d_final + 0.5 × consistency
 
-<span class="code-comment"># d_final: cosine drift from turn 1 to final turn</span>
-<span class="code-comment"># consistency: whether response trajectory keeps moving</span>
-<span class="code-comment">#              in the same semantic direction across turns</span>
-  </div>
+<span class="c"># d_final:     cosine drift from turn 1 to final turn</span>
+<span class="c"># consistency: whether response trajectory keeps moving</span>
+<span class="c">#              in the same semantic direction across turns</span></div>
 
   <p>Attacked conversations have a very consistent signature: responses pivot sharply toward the attacker's topic by turns 2–3 and stay there, forming a pronounced V-shaped trajectory when visualized. Clean conversations wander naturally. This signal was clean enough to achieve <strong>AUC 1.000 and 100% classification accuracy</strong> on our test set.</p>
 
-  <table class="results-table">
-    <thead>
-      <tr>
-        <th>Detection Method</th>
-        <th>AUC</th>
-        <th>Accuracy</th>
-        <th>Works?</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Feature Squeezing</td>
-        <td>0.925</td>
-        <td>92.5%</td>
-        <td class="yes">✓ Yes</td>
-      </tr>
-      <tr>
-        <td>Anomaly Detection (Isolation Forest)</td>
-        <td>0.073</td>
-        <td>47.5%</td>
-        <td class="no">✗ No</td>
-      </tr>
-      <tr>
-        <td>Nearest Neighbour</td>
-        <td>0.432</td>
-        <td>60.0%</td>
-        <td class="no">✗ No</td>
-      </tr>
-      <tr>
-        <td>Conversation Drift Detection</td>
-        <td>1.000</td>
-        <td>100.0%</td>
-        <td class="yes">✓ Yes</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Detection method</th>
+          <th>AUC</th>
+          <th>Accuracy</th>
+          <th>Works?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Feature Squeezing</td>
+          <td class="num">0.925</td>
+          <td class="num">92.5%</td>
+          <td class="pass">✓ Yes</td>
+        </tr>
+        <tr>
+          <td>Anomaly Detection (Isolation Forest)</td>
+          <td class="num">0.073</td>
+          <td class="num">47.5%</td>
+          <td class="fail">✗ No</td>
+        </tr>
+        <tr>
+          <td>Nearest Neighbour</td>
+          <td class="num">0.432</td>
+          <td class="num">60.0%</td>
+          <td class="fail">✗ No</td>
+        </tr>
+        <tr>
+          <td>Conversation Drift Detection</td>
+          <td class="num">1.000</td>
+          <td class="num">100.0%</td>
+          <td class="pass">✓ Yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <h2>The Recommended Defense Strategy</h2>
+  <h2>The recommended defense strategy</h2>
 
   <p>Based on our results, we recommend a two-layer approach. Start with <strong>Feature Squeezing at image ingestion</strong> — it catches 92.5% of adversarial images immediately, requires no model changes, and adds negligible latency. Then run <strong>Conversation Drift monitoring at the output level</strong> as a second line. Together these two lightweight, post-hoc methods provide strong protection without touching the underlying model at all.</p>
 
   <p>What we specifically recommend against is relying solely on embedding-space anomaly detection. The failure isn't a tuning problem or an algorithm selection problem — it's architectural. PGD-based attacks are designed to defeat it, and they do.</p>
 
-  <h2>Should You Be Worried Right Now?</h2>
+  <h2>Should you be worried right now?</h2>
 
   <p>Honestly — it depends on what you're building. VMI is currently more of a research-stage concern than an actively exploited vulnerability in commercial systems. The attack as we implemented it assumes <strong>white-box access to the encoder weights</strong>, which rules it out against closed-source systems like GPT-4V or Gemini where weights aren't accessible.</p>
 
@@ -236,50 +217,59 @@ score = 0.5 × d_final + 0.5 × consistency
 
   <hr class="divider">
 
-  <h2>FAQ</h2>
+  <h2 style="border-top:0;padding-top:0">Frequently asked questions</h2>
 
-  <div class="faq-item">
-    <div class="faq-q">How is VMI different from a regular prompt injection attack?</div>
-    <div class="faq-a">Prompt injection works through text — an attacker embeds instructions in a document or message that the model misinterprets as commands. VMI works through the image's latent representation, with no visible text or instruction anywhere. The attack is invisible to the user and doesn't require any unusual input in the conversation itself.</div>
+  <div class="faq">
+    <div class="faq__item">
+      <div class="faq__q">How is VMI different from a regular prompt injection attack?</div>
+      <div class="faq__a">Prompt injection works through text — an attacker embeds instructions in a document or message that the model misinterprets as commands. VMI works through the image's latent representation, with no visible text or instruction anywhere. The attack is invisible to the user and doesn't require any unusual input in the conversation itself.</div>
+    </div>
+    <div class="faq__item">
+      <div class="faq__q">Does this affect ChatGPT or other commercial AI tools?</div>
+      <div class="faq__a">As implemented in our research — which assumes white-box encoder access — no, not directly. Commercial closed-source systems like GPT-4V or Gemini are significantly harder to attack this way because their model weights aren't publicly accessible. The threat is more plausible for deployments using open-source VLMs like LLaVA or BLIP-2.</div>
+    </div>
+    <div class="faq__item">
+      <div class="faq__q">Why does Conversation Drift Detection work so well?</div>
+      <div class="faq__a">Because it measures something PGD has no choice but to disturb. The entire point of a VMI attack is to change what the model talks about — and Conversation Drift directly measures that change. Embedding-space detectors fail because PGD doesn't need to produce an unusual embedding; it just needs to produce an embedding near a specific target. Conversation drift is the attack's footprint in the output, not the input.</div>
+    </div>
+    <div class="faq__item">
+      <div class="faq__q">What are the limitations of your research?</div>
+      <div class="faq__a">Three main ones: the attack assumes white-box access to encoder weights, which limits real-world applicability against closed systems. Conversation Drift was evaluated on simulated sessions rather than a live LLaVA deployment, due to VRAM constraints. And the test set of 20 images is small — results at scale may differ. These are directions for future work.</div>
+    </div>
   </div>
 
-  <div class="faq-item">
-    <div class="faq-q">Does this affect ChatGPT or other commercial AI tools?</div>
-    <div class="faq-a">As implemented in our research — which assumes white-box encoder access — no, not directly. Commercial closed-source systems like GPT-4V or Gemini are significantly harder to attack this way because their model weights aren't publicly accessible. The threat is more plausible for deployments using open-source VLMs like LLaVA or BLIP-2.</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">Why does Conversation Drift Detection work so well?</div>
-    <div class="faq-a">Because it measures something PGD has no choice but to disturb. The entire point of a VMI attack is to change what the model talks about — and Conversation Drift directly measures that change. Embedding-space detectors fail because PGD doesn't need to produce an unusual embedding; it just needs to produce an embedding near a specific target. Conversation drift is the attack's footprint in the output, not the input.</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">What are the limitations of your research?</div>
-    <div class="faq-a">Three main ones: the attack assumes white-box access to encoder weights, which limits real-world applicability against closed systems. Conversation Drift was evaluated on simulated sessions rather than a live LLaVA deployment, due to VRAM constraints. And the test set of 20 images is small — results at scale may differ. These are directions for future work.</div>
-  </div>
-
-  <hr class="divider">
-
-  <div class="author-box">
-    <div class="author-icon">PS</div>
+  <div class="author">
+    <div class="author__mark">PS</div>
     <div>
-      <div class="author-name">Priyanshi Singhi</div>
-      <div class="author-bio">B.Tech CSE (Cyber Security &amp; Forensics) at UPES, Dehradun · CGPA 9.12/10 · Co-author of the VMI paper published at SSCSDF 2025 · singhipriyanshi2004@gmail.com</div>
+      <div class="author__name">Priyanshi Singhi</div>
+      <p class="author__bio">B.Tech CSE (Cyber Security &amp; Forensics) at UPES, Dehradun · CGPA 9.22/10 · Co-author of the VMI paper published at SSCSDF 2025 · singhipriyanshi2004@gmail.com</p>
     </div>
   </div>
 
   <div class="related">
-    <h3>Continue Reading</h3>
-    <a href="index.html#projects" class="related-link">→ See the full VMI research project details</a>
-    <a href="index.html#projects" class="related-link">→ See the CORTEX authentication threat intelligence system</a>
-    <a href="index.html#contact" class="related-link">→ Work with me on security research</a>
+    <div class="related__k">Continue reading</div>
+    <a href="index.html#projects" class="related-link">See the full VMI research project details <span aria-hidden="true">→</span></a>
+    <a href="index.html#projects" class="related-link">See the CORTEX authentication threat intelligence system <span aria-hidden="true">→</span></a>
+    <a href="blog-social-engineering.html" class="related-link">I almost got phished by an AI — here's how <span aria-hidden="true">→</span></a>
+    <a href="index.html#contact" class="related-link">Work with me on security research <span aria-hidden="true">→</span></a>
   </div>
 
-</div>
+</article>
+</main>
 
-<footer>
-  <p>Written by <a href="index.html">Priyanshi Singhi</a> · B.Tech CSE (Cyber Security &amp; Forensics) · UPES, Dehradun</p>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__meta">
+      Written by <strong>Priyanshi Singhi</strong><br>
+      B.Tech CSE · Cyber Security &amp; Forensics · UPES Dehradun
+    </div>
+    <div class="footer__meta" style="text-align:right">
+      <a href="index.html">Back to portfolio</a> · © <span data-year>2026</span>
+    </div>
+  </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
