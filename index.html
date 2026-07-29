@@ -39,6 +39,7 @@ nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;
 .hero-orb{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,195,.06) 0%,transparent 65%);top:-150px;right:-200px;pointer-events:none}
 .hero-orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(123,97,255,.05) 0%,transparent 65%);bottom:-100px;left:-100px;pointer-events:none}
 .hero-content{position:relative;max-width:820px}
+.hero-photo{width:148px;height:148px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 0 45px rgba(0,229,195,.18);margin-bottom:1.7rem;display:block}
 .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,195,.07);border:1px solid rgba(0,229,195,.18);color:var(--accent);font-size:.78rem;padding:5px 14px;border-radius:100px;margin-bottom:1.6rem;letter-spacing:.08em;font-weight:500}
 .hero-tag::before{content:'';display:block;width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s ease infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
@@ -197,9 +198,10 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="hero-orb"></div>
   <div class="hero-orb2"></div>
   <div class="hero-content">
+    <img src="priyanshi_img.jpg" alt="Priyanshi Singhi" class="hero-photo">
     <div class="hero-tag">Open to Internships &amp; Opportunities</div>
     <h1>Priyanshi<br><span>Singhi</span></h1>
-    <div class="hero-role">B.Tech CSE (Cyber Security &amp; Forensics) · UPES, Dehradun · CGPA 9.12/10</div>
+    <div class="hero-role">B.Tech CSE (Cyber Security &amp; Forensics) · UPES, Dehradun · CGPA 9.22/10</div>
     <p class="hero-sub">
       Building <strong style="color:#fff;font-weight:500;">secure, full-stack web applications</strong> with a security-first mindset.
       From MERN stack to adversarial AI threat detection — I build things that work and protect.
@@ -210,15 +212,15 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
     <div class="hero-stats">
       <div>
-        <div class="stat-num">9.12<span>/10</span></div>
+        <div class="stat-num">9.22<span>/10</span></div>
         <div class="stat-label">CGPA</div>
       </div>
       <div>
-        <div class="stat-num">6<span>+</span></div>
+        <div class="stat-num">7<span>+</span></div>
         <div class="stat-label">Projects</div>
       </div>
       <div>
-        <div class="stat-num">3<span></span></div>
+        <div class="stat-num">4<span></span></div>
         <div class="stat-label">Internships</div>
       </div>
       <div>
@@ -236,9 +238,9 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="sl">About Me</div>
       <h2>Security-minded<br><span>full-stack developer</span></h2>
       <p>I'm a <strong>Cyber Security and Forensics</strong> undergraduate at UPES, Dehradun with strong foundations in vulnerability assessment, secure web application development, and Python-based security tools.</p>
-      <p>I'm experienced in building and testing <strong>MERN stack applications</strong> and implementing solutions to improve system security and reliability — bridging the gap between functional development and real-world threat awareness.</p>
+      <p>I'm experienced in building and testing <strong>MERN and Next.js stack applications</strong> and implementing solutions to improve system security and reliability — bridging the gap between functional development and real-world threat awareness.</p>
       <p>From detecting PII leaks with regex automation to building adversarial prompt-injection defenses for LLM systems, I take a hands-on approach to solving complex security and development challenges.</p>
-      <div class="cgpa-badge">🏆 Academic Excellence — CGPA: 9.12 / 10</div>
+      <div class="cgpa-badge">🏆 Academic Excellence — CGPA: 9.22 / 10</div>
       <div class="about-btns">
         <a href="#projects" class="btn-primary" style="font-size:.85rem;padding:.75rem 1.5rem;">See My Work</a>
         <a href="mailto:singhipriyanshi2004@gmail.com" class="btn-outline" style="font-size:.85rem;padding:.75rem 1.5rem;">Email Me</a>
@@ -264,13 +266,6 @@ footer a{color:var(--accent);text-decoration:none}
         <div>
           <div class="ic-label">Location</div>
           <div class="ic-val">Dehradun, Uttarakhand, India</div>
-        </div>
-      </div>
-      <div class="info-card">
-        <div class="ic-icon">📞</div>
-        <div>
-          <div class="ic-label">Phone</div>
-          <div class="ic-val">+91 6376092237</div>
         </div>
       </div>
       <div class="info-card">
@@ -300,6 +295,24 @@ footer a{color:var(--accent);text-decoration:none}
 
     <div class="exp-card">
       <div class="exp-top">
+        <div class="exp-role">Intern</div>
+        <div class="exp-dur">May 2026 – July 2026</div>
+      </div>
+      <div class="exp-company">Shuru Tech</div>
+      <div class="exp-pts">
+        <div class="exp-pt">Contributing to CreditHelp India (CHI), a credit repair and loan assistance platform, across frontend, backend, and infrastructure.</div>
+        <div class="exp-pt">Performed feature development and debugging (CSS/animation and integration issues), and streamlined Git/PR review workflows.</div>
+      </div>
+      <div class="exp-stack">
+        <span class="tag hi">Next.js</span>
+        <span class="tag hi">TypeScript</span>
+        <span class="tag hi">Node.js</span>
+        <span class="tag">MySQL</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-top">
         <div class="exp-role">Full Stack Intern</div>
         <div class="exp-dur">Aug 2025 – Dec 2025 · 17 Weeks</div>
       </div>
@@ -312,7 +325,6 @@ footer a{color:var(--accent);text-decoration:none}
         <span class="tag hi">React</span>
         <span class="tag hi">Node.js</span>
         <span class="tag hi">Express.js</span>
-        <span class="tag hi">MongoDB</span>
         <span class="tag">REST APIs</span>
       </div>
     </div>
@@ -329,8 +341,6 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
       <div class="exp-stack">
         <span class="tag hi">MERN Stack</span>
-        <span class="tag">Responsive Design</span>
-        <span class="tag">Backend Integration</span>
       </div>
     </div>
 
@@ -375,6 +385,7 @@ footer a{color:var(--accent);text-decoration:none}
       <h3>Web Development</h3>
       <div class="tags">
         <span class="tag hi">React.js</span>
+        <span class="tag hi">Next.js</span>
         <span class="tag hi">HTML5</span>
         <span class="tag hi">CSS3</span>
         <span class="tag hi">Tailwind CSS</span>
@@ -390,6 +401,17 @@ footer a{color:var(--accent);text-decoration:none}
         <span class="tag">REST APIs</span>
         <span class="tag">MongoDB</span>
         <span class="tag">MySQL</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <div class="sk-cat">AI / Agentic Tools</div>
+      <h3>AI-Assisted Development</h3>
+      <div class="tags">
+        <span class="tag hi2">Claude</span>
+        <span class="tag hi2">GPT</span>
+        <span class="tag hi2">GitHub Copilot</span>
+        <span class="tag hi2">AntiGravity</span>
+        <span class="tag">Prompt Engineering</span>
       </div>
     </div>
     <div class="sk-card">
@@ -433,10 +455,30 @@ footer a{color:var(--accent);text-decoration:none}
   <p class="sec-sub">Security-conscious, full-stack projects built from coursework, internships, and independent research.</p>
   <div class="proj-grid">
 
+    <div class="proj-card">
+      <div class="pbadge b-web">Full Stack · AI-Powered</div>
+      <div class="proj-title">FreelanceFlow — AI-Powered Freelancer Management Platform</div>
+      <div class="proj-date">Jul 2026 · Team project with Saumya Saini</div>
+      <div class="proj-pts">
+        <div class="proj-pt">Full-stack Micro-SaaS platform for client/project management, invoicing, and overdue payment detection.</div>
+        <div class="proj-pt">Built end-to-end using Claude, GPT, and Antigravity for agentic code generation and workflow automation.</div>
+      </div>
+      <div class="tags" style="margin-bottom:1rem">
+        <span class="tag hi">Next.js</span>
+        <span class="tag hi">Node.js</span>
+        <span class="tag hi">Express</span>
+        <span class="tag hi">MongoDB</span>
+        <span class="tag hi2">OpenAI API</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/priyanshisinghi" class="proj-link" target="_blank">⬡ GitHub</a>
+      </div>
+    </div>
+
    <div class="proj-card">
   <div class="pbadge b-sec">AI Security · Research</div>
   <div class="proj-title">VMI — Visual Memory Injection Attacks in Multi-Turn Vision-Language Models</div>
-  <div class="proj-date">Nov 2025 – Feb 2026 · Co-authored with Aadit Gulati · SSCSDF 2025</div>
+  <div class="proj-date">Mar 2026 – May 2026 · Co-authored with Aadit Gulati · Accepted at IEEE ICIIS 2026</div>
   <div class="proj-pts">
     <div class="proj-pt">Implemented a PGD-based adversarial attack on CLIP ViT-L/14 that applies imperceptible pixel perturbations (≤ 8/255) to shift image embeddings toward an attacker-chosen semantic target — achieving 80% success rate and a mean cosine shift of 0.31 across 20 test images.</div>
     <div class="proj-pt">Evaluated four detection strategies — Feature Squeezing, Embedding Anomaly Detection, Nearest Neighbour Analysis, and Conversation Drift Detection — and identified why embedding-space detectors fundamentally fail: PGD deliberately steers adversarial embeddings into the benign distribution, making them invisible to anomaly-based methods.</div>
@@ -461,7 +503,7 @@ footer a{color:var(--accent);text-decoration:none}
     <div class="proj-card">
   <div class="pbadge b-ai">Security Engineering · Minor Project</div>
   <div class="proj-title">CORTEX — Context-Aware Authentication Threat Intelligence System</div>
-  <div class="proj-date">Jan 2026 – Apr 2026 · Team of 4 · Guided by Dr. Bhavana Kaushik</div>
+  <div class="proj-date">Jan 2026 – Apr 2026 · Team of 4 · Guided by Dr. Bhavana Kaushik · Accepted at FiCloud 2026 (CSW Workshop)</div>
   <div class="proj-pts">
     <div class="proj-pt">Built a 13-module authentication analysis pipeline in Flask that evaluates every login attempt through velocity detection, impossible travel checking, device fingerprinting, threat intelligence feed cross-referencing, and behavioral baseline comparison.</div>
     <div class="proj-pt">Designed a contextual risk scoring engine (LOW / MEDIUM / HIGH) with risk memory escalation — prior HIGH-risk history amplifies future scores — and a risk decay mechanism that gradually reduces scores for sustained clean behavior.</div>
@@ -571,20 +613,48 @@ footer a{color:var(--accent);text-decoration:none}
 <section id="accomplishments">
   <div class="sl">Achievements &amp; Leadership</div>
   <h2>Accomplishments &amp; <span>Extra-curriculars</span></h2>
-  <p class="sec-sub">Leadership roles, published research, competitions, and community contributions.</p>
+  <p class="sec-sub">Leadership roles, published research, certifications, and community contributions.</p>
   <div class="acc-grid">
     <div class="acc-card">
       <div class="acc-icon gold">📄</div>
       <div>
         <div class="acc-title">Research Paper — VMI Detection</div>
-        <div class="acc-sub">2026 — "Visual Memory Injection Attacks: Detection via Entropy Analysis &amp; DOM Integrity Verification"</div>
+        <div class="acc-sub">Accepted at IEEE ICIIS 2026 — "Visual Memory Injection Attacks: Detection via Entropy Analysis &amp; DOM Integrity Verification"</div>
       </div>
     </div>
     <div class="acc-card">
       <div class="acc-icon gold">📄</div>
       <div>
-        <div class="acc-title">Published Research Paper</div>
-        <div class="acc-sub">SSCSDF 2025 — "Decentralized Currency Exchange Wallet for Travellers"</div>
+        <div class="acc-title">Research Paper — CORTEX</div>
+        <div class="acc-sub">Accepted at FiCloud 2026 (CSW Workshop) — "Context-Aware Authentication Threat Intelligence System"</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon teal">🎓</div>
+      <div>
+        <div class="acc-title">Cisco Networking Academy</div>
+        <div class="acc-sub">Network Defense</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon purple">🎓</div>
+      <div>
+        <div class="acc-title">Microsoft — GitHub Foundations</div>
+        <div class="acc-sub">Certification</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon purple">🎓</div>
+      <div>
+        <div class="acc-title">Microsoft — Copilot Immersion Experience</div>
+        <div class="acc-sub">Certification</div>
+      </div>
+    </div>
+    <div class="acc-card">
+      <div class="acc-icon gold">🎓</div>
+      <div>
+        <div class="acc-title">Deloitte Australia</div>
+        <div class="acc-sub">Cybersecurity Job Simulation</div>
       </div>
     </div>
     <div class="acc-card">
@@ -633,7 +703,7 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="acc-icon gold">🎓</div>
       <div>
         <div class="acc-title">Academic Excellence</div>
-        <div class="acc-sub">CGPA 9.12/10 at UPES · 12th: 86.4% · 10th: 90%</div>
+        <div class="acc-sub">CGPA 9.22/10 at UPES · 12th: 86.4% · 10th: 90%</div>
       </div>
     </div>
   </div>
@@ -671,7 +741,6 @@ footer a{color:var(--accent);text-decoration:none}
     <p>Open to internship opportunities, freelance projects, and collaborations in cybersecurity or full-stack web development. Based in Dehradun — available remotely across India and worldwide.</p>
     <div class="contact-links">
       <a href="mailto:singhipriyanshi2004@gmail.com" class="clink">✉️ singhipriyanshi2004@gmail.com</a>
-      <a href="tel:+916376092237" class="clink">📞 +91 6376092237</a>
       <a href="https://linkedin.com/in/priyanshi-singhi" target="_blank" class="clink">💼 linkedin.com/in/priyanshi-singhi</a>
       <a href="https://github.com/priyanshisinghi" target="_blank" class="clink">⬡ github.com/priyanshisinghi</a>
     </div>
@@ -682,7 +751,7 @@ footer a{color:var(--accent);text-decoration:none}
 <!-- FOOTER -->
 <footer>
   <p>Designed &amp; built by <a href="#hero">Priyanshi Singhi</a> · B.Tech CSE (Cyber Security &amp; Forensics) · UPES, Dehradun</p>
-  <p style="margin-top:6px;font-size:.73rem">Full Stack Developer · Cybersecurity Enthusiast · CGPA 9.12/10 · Open to Opportunities</p>
+  <p style="margin-top:6px;font-size:.73rem">Full Stack Developer · Cybersecurity Enthusiast · CGPA 9.22/10 · Open to Opportunities</p>
 </footer>
 
 <script>
